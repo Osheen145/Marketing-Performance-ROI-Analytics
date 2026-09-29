@@ -1,0 +1,13 @@
+MARKETING ANALYTICS DATA CLEANING & HYGIENE AUDIT REPORT
+============================================================
+
+- Campaign Raw Null Counts: {'date': 0, 'campaign_id': 0, 'channel': 0, 'channel_type': 0, 'strategic_intent': 0, 'impressions': 0, 'clicks': 0, 'spend_inr': 0, 'leads': 0, 'direct_conversions': 0, 'direct_revenue_inr': 0}
+- Passed sanity check: all clicks <= impressions.
+- Deduplicated touchpoints: removed 0 duplicate rows.
+
+SUMMARY STATS:
+- Campaign Days Processed: 2920
+- Clean Customer Touchpoints: 49414
+- Clean Verified Orders: 30686
+- Customer Profiles: 18000
+- SQLite Database Created: C:\Users\oshee\.gemini\antigravity\scratch\marketing-performance-roi-analytics\data\marketing_analytics.db

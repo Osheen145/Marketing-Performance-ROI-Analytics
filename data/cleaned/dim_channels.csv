@@ -1,0 +1,9 @@
+channel,channel_type,strategic_intent,channel_id
+Google_Search_Brand,Search,High Intent / Brand Defense,1
+Google_Search_Generic,Search,Prospecting,2
+Meta_Ads_Prospecting,Social,Prospecting / Discovery,3
+Meta_Ads_Retargeting,Social,Retargeting,4
+YouTube_Video_Ads,Video,Top of Funnel / Awareness,5
+LinkedIn_Sponsored,B2B_Social,High-Value Acquisition,6
+Affiliate_Partner_Network,Affiliate,Performance CPA,7
+Email_CRM_Automation,CRM,Retention & Re-engagement,8

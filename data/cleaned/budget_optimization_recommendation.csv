@@ -1,0 +1,9 @@
+Channel,Current_Monthly_Spend_INR,Current_Avg_ROAS,Recommended_Allocation_INR,Expected_Marginal_ROAS,Expected_Incremental_Revenue_INR,Expected_Incremental_Profit_INR,Business_Reasoning
+Meta_Ads_Retargeting,496953.42,8.08,350000.0,4.2,1470000.0,389410.0,High conversion intent with unsaturated middle-funnel cart abandoners; captures high ROAS (4.2x) before fatigue.
+Affiliate_Partner_Network,461066.66,7.63,300000.0,3.45,1035000.0,219570.0,Performance CPA model with strong Tier-2 footprint; incremental spend scales with predictable 3.45x return.
+Meta_Ads_Prospecting,1270148.59,3.49,150000.0,2.65,397500.0,51532.5,Replenishes top-of-funnel pipeline; feeds future retargeting pools with 2.65x immediate return.
+LinkedIn_Sponsored,603525.47,1.66,150000.0,2.8,420000.0,63780.0,"Enterprise/B2B buyer acquisition with high AOV (INR 6,800+); delivers superior long-term customer LTV."
+Email_CRM_Automation,101438.29,180.25,50000.0,5.5,275000.0,88875.0,Captures maximum available capacity (INR 50k for automated flows & SMS triggers) at exceptional 5.5x mROAS.
+Google_Search_Brand,409028.72,17.66,0.0,1.6,0.0,0.0,Zero incremental allocation: Already captures 92% impression share. Additional spend bids against ourselves.
+Google_Search_Generic,1088540.26,2.38,0.0,1.75,0.0,0.0,Zero incremental allocation: High CPC keyword inflation (INR 45+) yields poor marginal return (1.75x).
+YouTube_Video_Ads,679211.59,2.31,0.0,1.45,0.0,0.0,Zero incremental allocation: Direct 30-day conversion is low (1.45x); brand awareness is adequately funded.

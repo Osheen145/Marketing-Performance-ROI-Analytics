@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketing Performance & ROI Analytics | Executive Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #3b82f6;
+            --accent: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        body {
+            background-color: var(--bg);
+            color: var(--text-dark);
+            padding: 24px;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 1350px;
+            margin: 0 auto;
+        }
+        header {
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 16px;
+        }
+        .tag {
+            display: inline-block;
+            background: #dbeafe;
+            color: #1e40af;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 9999px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+        h1 {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+        .subtitle {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+        .callout {
+            background: #eff6ff;
+            border-left: 4px solid var(--primary-light);
+            padding: 14px 18px;
+            border-radius: 6px;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+        .callout strong {
+            color: #1e3a8a;
+        }
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .kpi-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+        .kpi-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+        .kpi-val {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 6px 0;
+        }
+        .kpi-sub {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+        .card h2 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            margin-top: 8px;
+        }
+        th, td {
+            text-align: left;
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border);
+        }
+        th {
+            background: #f1f5f9;
+            color: #475569;
+            font-weight: 600;
+        }
+        .badge-green {
+            background: #dcfce7;
+            color: #166534;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 11px;
+        }
+        .badge-orange {
+            background: #fef3c7;
+            color: #92400e;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 11px;
+        }
+        .badge-red {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 11px;
+        }
+        .recommendations {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 16px;
+        }
+        .rec-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-top: 4px solid var(--primary-light);
+            border-radius: 6px;
+            padding: 16px;
+        }
+        .rec-card.rec-1 { border-top-color: #10b981; }
+        .rec-card.rec-2 { border-top-color: #3b82f6; }
+        .rec-card.rec-3 { border-top-color: #f59e0b; }
+        .rec-num {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+        .rec-title {
+            font-size: 15px;
+            font-weight: 700;
+            margin: 6px 0;
+            color: var(--text-dark);
+        }
+        .rec-desc {
+            font-size: 12px;
+            color: #475569;
+        }
+        .rec-impact {
+            margin-top: 10px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #166534;
+            background: #f0fdf4;
+            padding: 6px 8px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="tag">Growth & Financial Analytics · Level 5 Standard</div>
+            <h1>Marketing Performance & ROI Analytics Console</h1>
+            <div class="subtitle">Enterprise Growth Analytics · Osheen Dongre · Data-Driven Decision Architecture</div>
+            <div class="callout">
+                <strong>Business Problem:</strong> <em>"The company spends ₹6.13 Crore across 8 channels. Which channels generate profitable customers — not just cheap clicks?"</em><br>
+                <strong>The Keystone Question Answered:</strong> <em>"If I give you another ₹10 lakh next month, where should you spend it — and what do you expect to get back?"</em><br>
+                <strong>Answer:</strong> Allocate ₹3.5L to Meta Retargeting, ₹3.0L to Affiliate CPA, ₹1.5L to LinkedIn B2B, ₹1.5L to Meta Prospecting, and ₹50k to Email Automations. <strong>Projected Return: ₹35.98 Lakh in Incremental Revenue (+3.60x Blended Marginal ROAS) and ₹8.13 Lakh in Net Profit.</strong>
+            </div>
+        </header>
+
+        <!-- KPI Grid -->
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-title">Total Annual Spend</div>
+                <div class="kpi-val">₹6.13 Cr</div>
+                <div class="kpi-sub">8 Active Channels</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-title">Net Attributed Revenue</div>
+                <div class="kpi-val">₹12.98 Cr</div>
+                <div class="kpi-sub">Gross GMV net of returns</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-title">Blended ROAS</div>
+                <div class="kpi-val">2.12x</div>
+                <div class="kpi-sub">Net Revenue / Spend</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-title">Blended CAC</div>
+                <div class="kpi-val">₹3,407</div>
+                <div class="kpi-sub">18,000 Acquired Customers</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-title">12-Month LTV:CAC</div>
+                <div class="kpi-val">3.82x</div>
+                <div class="kpi-sub">Healthy Portfolio Threshold (>3.0x)</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-title">Net Profit Contribution</div>
+                <div class="kpi-val">₹6.85 Cr</div>
+                <div class="kpi-sub">Gross Margin minus Ad Spend</div>
+            </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="grid-2">
+            <div class="card">
+                <h2>Multi-Touch Attribution: Exposing the "Last-Touch Trap"</h2>
+                <canvas id="mtaChart" height="200"></canvas>
+            </div>
+            <div class="card">
+                <h2>Channel Profitability & ROAS vs CAC</h2>
+                <canvas id="bubbleChart" height="200"></canvas>
+            </div>
+        </div>
+
+        <!-- The 10 Lakh Optimization Table -->
+        <div class="card">
+            <h2>The Keystone Plan: ₹10 Lakh Incremental Budget Allocation</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Channel</th>
+                        <th>Recommended Spend</th>
+                        <th>Expected Marginal ROAS</th>
+                        <th>Expected Incremental Revenue</th>
+                        <th>Expected Net Profit</th>
+                        <th>Strategic Rationale</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Meta Ads (Retargeting)</strong></td>
+                        <td>₹3,50,000 (35%)</td>
+                        <td><span class="badge-green">4.20x</span></td>
+                        <td>₹14,70,000</td>
+                        <td>₹4,14,400</td>
+                        <td>High intent cart abandoners; high headroom before fatigue</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Affiliate Partner Network</strong></td>
+                        <td>₹3,00,000 (30%)</td>
+                        <td><span class="badge-green">3.45x</span></td>
+                        <td>₹10,35,000</td>
+                        <td>₹2,38,200</td>
+                        <td>Performance CPA model with strong Tier-2 city reach</td>
+                    </tr>
+                    <tr>
+                        <td><strong>LinkedIn Sponsored</strong></td>
+                        <td>₹1,50,000 (15%)</td>
+                        <td><span class="badge-green">2.80x</span></td>
+                        <td>₹4,20,000</td>
+                        <td>₹68,400</td>
+                        <td>High AOV (₹6,800+) enterprise buyers; superior long-term LTV</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Meta Ads (Prospecting)</strong></td>
+                        <td>₹1,50,000 (15%)</td>
+                        <td><span class="badge-green">2.65x</span></td>
+                        <td>₹3,97,500</td>
+                        <td>₹56,700</td>
+                        <td>Replenishes top-of-funnel audience pools for future retargeting</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Email / CRM Automation</strong></td>
+                        <td>₹50,000 (5%)</td>
+                        <td><span class="badge-green">5.50x</span></td>
+                        <td>₹2,75,000</td>
+                        <td>₹35,467</td>
+                        <td>Captures maximum available flow capacity at near-zero variable cost</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Google Search (Brand)</strong></td>
+                        <td>₹0 (0%)</td>
+                        <td><span class="badge-orange">1.60x</span></td>
+                        <td>₹0</td>
+                        <td>₹0</td>
+                        <td>Saturated: Already 92% impression share; extra spend bids up CPC</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Google Search (Generic)</strong></td>
+                        <td>₹0 (0%)</td>
+                        <td><span class="badge-orange">1.75x</span></td>
+                        <td>₹0</td>
+                        <td>₹0</td>
+                        <td>Unprofitable bidding competition; high CPC inflation</td>
+                    </tr>
+                    <tr>
+                        <td><strong>YouTube Video Ads</strong></td>
+                        <td>₹0 (0%)</td>
+                        <td><span class="badge-red">1.45x</span></td>
+                        <td>₹0</td>
+                        <td>₹0</td>
+                        <td>Adequately funded at baseline for awareness; low direct conversion</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 3 Ranked Recommendations -->
+        <h2 style="margin: 24px 0 12px 0;">3 Ranked Executive Recommendations</h2>
+        <div class="recommendations">
+            <div class="rec-card rec-1">
+                <div class="rec-num">Recommendation 1 · Primary Growth Driver</div>
+                <div class="rec-title">Scale Middle-Funnel & Performance Affiliates (+₹6.5 Lakh)</div>
+                <div class="rec-desc">Reallocate capital into Meta Retargeting (₹3.5L) and Affiliate Partners (₹3.0L). Focus ad copy on urgency and social proof.</div>
+                <div class="rec-impact">Expected Impact: ₹25.05 Lakh Revenue (3.85x mROAS)</div>
+            </div>
+            <div class="rec-card rec-2">
+                <div class="rec-num">Recommendation 2 · Cohort Quality</div>
+                <div class="rec-title">Acquire High-LTV Buyers & Replenish Top-Funnel (+₹3.0 Lakh)</div>
+                <div class="rec-desc">Target Tier-1 professionals via LinkedIn B2B (₹1.5L) and scale lookalikes on Meta Prospecting (₹1.5L) to feed future retargeting pools.</div>
+                <div class="rec-impact">Expected Impact: ₹8.18 Lakh Revenue + 28% Repeat Rate</div>
+            </div>
+            <div class="rec-card rec-3">
+                <div class="rec-num">Recommendation 3 · Cost Containment</div>
+                <div class="rec-title">Halt Brand Search Spend Expansion (₹0 Change)</div>
+                <div class="rec-desc">Freeze incremental bidding on branded keywords. Maintain target impression share without paying auction premiums for customers already seeking our brand.</div>
+                <div class="rec-impact">Expected Impact: Saves ₹1.8 Lakh in CPC inflation</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // MTA Chart
+        const ctxMta = document.getElementById('mtaChart').getContext('2d');
+        new Chart(ctxMta, {
+            type: 'bar',
+            data: {
+                labels: ['Google Brand', 'Meta Retarget', 'Google Generic', 'Meta Prospect', 'YouTube Ads', 'Affiliate', 'Email CRM', 'LinkedIn'],
+                datasets: [
+                    {
+                        label: 'First-Touch (Top of Funnel)',
+                        data: [101.7, 0, 287.9, 398.1, 309.3, 149.8, 0, 52.0],
+                        backgroundColor: '#1e3a8a'
+                    },
+                    {
+                        label: 'Linear (Equitable Share)',
+                        data: [183.8, 198.2, 238.0, 279.1, 183.2, 106.6, 83.1, 27.0],
+                        backgroundColor: '#3b82f6'
+                    },
+                    {
+                        label: 'Last-Touch (Closing Attribution)',
+                        data: [402.9, 269.8, 158.6, 105.2, 72.9, 122.3, 153.1, 14.2],
+                        backgroundColor: '#ef4444'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'bottom' },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': ₹' + context.raw + ' Lakh';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: { title: { display: true, text: 'Revenue (Lakh INR)' } }
+                }
+            }
+        });
+
+        // ROAS vs CAC Chart
+        const ctxBubble = document.getElementById('bubbleChart').getContext('2d');
+        new Chart(ctxBubble, {
+            type: 'bar',
+            data: {
+                labels: ['Google Brand', 'Meta Retarget', 'Affiliate', 'Google Generic', 'Meta Prospect', 'LinkedIn', 'YouTube Ads'],
+                datasets: [
+                    {
+                        label: 'Gross ROAS (x)',
+                        data: [8.21, 4.52, 2.21, 1.21, 0.69, 0.20, 0.90],
+                        backgroundColor: '#10b981',
+                        yAxisID: 'y'
+                    },
+                    {
+                        label: 'CAC (INR in Thousands)',
+                        data: [0.89, 1.45, 2.76, 3.36, 2.82, 9.80, 1.88],
+                        backgroundColor: '#f59e0b',
+                        yAxisID: 'y1'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'bottom' }
+                },
+                scales: {
+                    y: { 
+                        type: 'linear', 
+                        position: 'left',
+                        title: { display: true, text: 'ROAS (x)' }
+                    },
+                    y1: {
+                        type: 'linear',
+                        position: 'right',
+                        grid: { drawOnChartArea: false },
+                        title: { display: true, text: 'CAC (₹ Thousands)' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

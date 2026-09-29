@@ -1,0 +1,9 @@
+campaign_id,channel,strategic_intent
+CMP_1001,Google_Search_Brand,High Intent / Brand Defense
+CMP_1002,Google_Search_Generic,Prospecting
+CMP_1003,Meta_Ads_Prospecting,Prospecting / Discovery
+CMP_1004,Meta_Ads_Retargeting,Retargeting
+CMP_1005,YouTube_Video_Ads,Top of Funnel / Awareness
+CMP_1006,LinkedIn_Sponsored,High-Value Acquisition
+CMP_1007,Affiliate_Partner_Network,Performance CPA
+CMP_1008,Email_CRM_Automation,Retention & Re-engagement
